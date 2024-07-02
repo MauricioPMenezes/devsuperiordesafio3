@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "tb_Client")
+@Table(name = "tb_client")
 public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,19 +17,19 @@ public class Client {
     private String cpf;
 
     private Double income; //renda
-    private LocalDate birthtDate;
+    private LocalDate birthDate;
     private Integer children;
 
     public Client(){
 
     }
 
-    public Client(Long id, String name, String cpf, Double income, LocalDate birthtDate, Integer children) {
+    public Client(Long id, String name, String cpf, Double income, LocalDate birthDate, Integer children) {
         this.id = id;
         this.name = name;
         this.cpf = cpf;
         this.income = income;
-        this.birthtDate = birthtDate;
+        this.birthDate = birthDate;
         this.children = children;
     }
 
@@ -57,12 +57,12 @@ public class Client {
         this.cpf = cpf;
     }
 
-    public LocalDate getBirthtDate() {
-        return birthtDate;
+    public LocalDate getBirthDate() {
+        return birthDate;
     }
 
-    public void setBirthtDate(LocalDate birthtDate) {
-        this.birthtDate = birthtDate;
+    public void setBirthDate(LocalDate birthtDate) {
+        this.birthDate = birthtDate;
     }
 
     public Double getIncome() {
