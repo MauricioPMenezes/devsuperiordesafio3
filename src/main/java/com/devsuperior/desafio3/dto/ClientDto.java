@@ -1,8 +1,7 @@
 package com.devsuperior.desafio3.dto;
 
 import com.devsuperior.desafio3.entities.Client;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 
 import java.time.LocalDate;
 
@@ -17,14 +16,13 @@ public class ClientDto {
     @NotBlank(message = "Campo CPF Requerido")
     private String cpf;
 
-
-    @NotBlank(message = "Caso não tenha renda entre com 0")
+    @PositiveOrZero(message = "Numero negativo é invalido")
     private Double income; //renda do cliente
 
-    @NotBlank(message = "Campo CPF Requerido")
+    @PastOrPresent(message = "Data Invalida")
     private LocalDate birthDate;
 
-    @NotBlank(message = "Caso não tenha filhos entre com 0")
+    @PositiveOrZero(message = "Numero negativo é invalido")
     private Integer children;
 
     public ClientDto(Long id, String cpf, String name, Double income, LocalDate birthDate, Integer children) {
@@ -69,4 +67,6 @@ public class ClientDto {
     public Integer getChildren() {
         return children;
     }
+
+
 }

@@ -20,6 +20,7 @@ public class ClientService {
     @Autowired
     private ClientRepository repository;
 
+
     private void CopyDtoToEntity(ClientDto dto, Client entity) {
 
         entity.setName(dto.getName());
@@ -35,6 +36,7 @@ public class ClientService {
                 ()-> new ResourceNotFoundException("Recurso não encontrado!"));
         return new ClientDto(client);
     }
+
     @Transactional(readOnly = true)
     public Page<ClientDto> findAll(Pageable pageable){
         Page<Client> result= repository.findAll(pageable);
@@ -42,26 +44,33 @@ public class ClientService {
 
     }
 
+
     @Transactional
     public ClientDto insert(ClientDto dto){
+        try {
+            Client entity = new Client();
+            CopyDtoToEntity(dto,entity);
+            entity =repository.save(entity);
+            return new ClientDto(entity);
 
-        Client  entity = new Client();
-        CopyDtoToEntity(dto,entity);
-        entity =repository.save(entity);
-        return new ClientDto(entity);
+        }catch (DataIntegrityViolationException e){
+            throw new ResourceNotFoundException("CPF ja cadastrado");
+        }
+
 
     }
+    @Transactional
     public ClientDto update(Long id,ClientDto dto){
+
         try {
             Client  entity =repository.getReferenceById(id);
             CopyDtoToEntity(dto,entity);
             entity =repository.save(entity);
             return new ClientDto(entity);
-        }catch (EntityNotFoundException e){
+        }catch (EntityNotFoundException e  ){
 
             throw new ResourceNotFoundException("Recurso não encontrado");
         }
-
     }
     @Transactional(propagation = Propagation.SUPPORTS)
     public void delete(Long id) {
@@ -75,4 +84,7 @@ public class ClientService {
             throw new DatabaseException("Falha de integridade referencial");
         }
     }
+
+
+
 }
